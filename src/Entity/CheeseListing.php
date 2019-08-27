@@ -9,10 +9,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get","post"},
- *     itemOperations={"get","put","delete"},
- *     normalizationContext={"groups": {"cheese_listing:read"},"swagger_definition_name"="Read"},
- *     denormalizationContext={"groups": {"cheese_listing:write"},"swagger_definition_name"="Write"},
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get", "put", "delete"},
+ *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
+ *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
  *     shortName="cheeses"
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
@@ -112,9 +112,9 @@ class CheeseListing
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->getCreatedAt();
+        return $this->createdAt;
     }
 
     /**
