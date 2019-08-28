@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(
@@ -54,8 +55,14 @@ class CheeseListing
      */
     private $isPublished = false;
 
-    public function __construct()
+    /**
+     * CheeseListing constructor.
+     * @param $title
+     * @throws \Exception
+     */
+    public function __construct($title)
     {
+        $this->title     = $title;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -69,29 +76,16 @@ class CheeseListing
         return $this->title;
     }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     /**
      * The description of the cheese as raw text.
      *
      * @Groups("cheese_listing:write")
+     * @SerializedName("description")
      */
     public function setTextDescription(string $description): self
     {
