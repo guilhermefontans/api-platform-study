@@ -19,7 +19,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
  *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
  *     shortName="cheeses",
- *     paginationItemsPerPage=20
+ *     paginationItemsPerPage=20,
+ *     attributes={
+            "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}, "xml"={"text/xml"}}
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
