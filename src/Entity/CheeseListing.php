@@ -76,6 +76,13 @@ class CheeseListing
     private $isPublished = false;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"cheese_listing:read", "cheese_listing:write"})
+     */
+    private $owner;
+
+    /**
      * CheeseListing constructor.
      * @param $title
      * @throws \Exception
@@ -160,6 +167,18 @@ class CheeseListing
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
