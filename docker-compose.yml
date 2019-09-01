@@ -3,7 +3,7 @@ version: '3'
 services:
   nginx:
     image: 'nginx:1.15.3-alpine'
-    container_name: nginx-app
+    container_name: nginx-api-platform
     restart: always
     ports:
       - '8000:80'
@@ -15,6 +15,7 @@ services:
     links:
       - mariadb
   php:
+    container_name: php-api-platform
     build:
       context: .
       dockerfile: docker/php/Dockerfile
@@ -22,12 +23,8 @@ services:
     env_file:
       - .env
     user: 1000:1000
-    depends_on:
-      - mariadb
-    links:
-      - mariadb
   mariadb:
-    container_name: mysqlASW
+    container_name: db-api-platform
     image: mariadb:10.4.7
     restart: always
     ports:
@@ -36,3 +33,4 @@ services:
       - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
