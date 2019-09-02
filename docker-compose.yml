@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  nginx:
+  webserver:
     image: 'nginx:1.15.3-alpine'
-    container_name: nginx-api-platform
+    container_name: webserver-api-platform
     restart: on-failure
     ports:
       - '8000:80'
@@ -24,8 +24,8 @@ services:
       - .env
     user: 1000:1000
     depends_on:
-      - mariadb
-  mariadb:
+      - db
+  db:
     container_name: db-api-platform
     image: mariadb:10.4.7
     restart: on-failure
@@ -38,3 +38,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - ${ADMINER_PORT}:8080
