@@ -16,13 +16,16 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
+ *     collectionOperations={
+ *          "get",
+ *          "post"={"access_control"="is_granted('ROLE_USER')"}
+ *      },
  *     itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
  *         },
- *         "put",
- *         "delete"
+ *         "put"={"access_control"="is_granted('ROLE_USER')"},
+ *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
  *     },
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
  *     denormalizationContext={"groups"={"cheese_listing:write"}, "swagger_definition_name"="Write"},
