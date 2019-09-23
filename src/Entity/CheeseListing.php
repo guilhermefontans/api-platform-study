@@ -24,7 +24,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *         "get"={
  *             "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
  *         },
- *         "put"={"access_control"="is_granted('ROLE_USER')"},
+ *         "put"={
+ *              "access_control"="is_granted('ROLE_USER') and object.getOwner() == user",
+ *              "access_control_message"="Only the creator can edit a cheese listing"
+ *         },
  *         "delete"={"access_control"="is_granted('ROLE_ADMIN')"}
  *     },
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},
@@ -147,6 +150,13 @@ class CheeseListing
     public function setTextDescription(string $description): self
     {
         $this->description = nl2br($description);
+
+        return $this;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

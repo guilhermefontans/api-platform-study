@@ -5,6 +5,7 @@ namespace App\Test;
 use App\ApiPlatform\Test\ApiTestCase;
 use App\ApiPlatform\Test\Client;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class CustomApiTestCase
@@ -63,5 +64,10 @@ class CustomApiTestCase extends ApiTestCase
         $user = $this->createUser($email, $password);
         $this->logIn($client, $email, $password);
         return $user;
+    }
+
+    protected function getEntityManager(): EntityManagerInterface
+    {
+        return self::$container->get('doctrine')->getManager();
     }
 }
