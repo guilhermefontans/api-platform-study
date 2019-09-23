@@ -41,13 +41,13 @@ class CheeseListingResourceTest extends CustomApiTestCase
         $em->persist($cheeseListing);
         $em->flush();
 
-        $this->logIn($client,'teste1@teste.com', '123' );
+        $this->logIn($client,$user1->getEmail(), '123' );
         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
             'json' => ['title' => 'updated']
         ]);
         $this->assertResponseStatusCodeSame(200);
 
-        $this->logIn($client,'teste2@teste.com', '123' );
+        $this->logIn($client,$user2->getEmail(), '123' );
         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
             'json' => ['title' => 'updated']
         ]);
