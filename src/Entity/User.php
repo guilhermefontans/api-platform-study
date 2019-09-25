@@ -21,7 +21,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     accessControl="is_granted('ROLE_USER')",
  *     collectionOperations={
  *          "get",
- *          "post" = {"access_control" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"}
+ *          "post" = {
+ *              "access_control" = "is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+ *              "validation_groups" = {"Default", "create"}
+ *          }
  *     },
  *     itemOperations={
  *          "get",
@@ -66,6 +69,7 @@ class User implements UserInterface
     /**
      * @Groups("user:write")
      * @SerializedName("password")
+     * @Assert\NotBlank(groups={"create"})
      */
     private $plainPassword;
 
