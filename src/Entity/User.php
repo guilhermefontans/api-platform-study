@@ -57,6 +57,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"admin:write"})
      */
     private $roles = [];
 
@@ -87,6 +88,12 @@ class User implements UserInterface
      * @ApiSubresource()
      */
     private $cheeseListings;
+
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     * @Groups({"admin:read", "user:write"})
+     */
+    private $phoneNumber;
 
     public function __construct()
     {
@@ -224,6 +231,18 @@ class User implements UserInterface
     public function setPlainPassword($plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
         return $this;
     }
 
