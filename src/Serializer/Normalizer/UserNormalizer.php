@@ -3,6 +3,7 @@
 namespace App\Serializer\Normalizer;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
@@ -16,9 +17,14 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
     private const ALREADY_CALLED = 'USER_NORMALIZER_ALREADY_CALLED';
 
-    public function __construct(ObjectNormalizer $normalizer)
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
     {
-        $this->normalizer = $normalizer;
+        $this->security = $security;
     }
 
     public function normalize($object, $format = null, array $context = array()): array
@@ -52,6 +58,10 @@ class UserNormalizer implements ContextAwareNormalizerInterface, CacheableSuppor
 
     private function userIsOwner(User $user): bool
     {
-        return rand(0, 10) > 5;
+        if (! $this->security->getUser()) {
+            return false;
+        }
+
+        return $this->security->getUser()->getUsername() === $user->getUsername();
     }
 }

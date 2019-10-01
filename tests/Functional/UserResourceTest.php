@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Test;
-
 
 use App\Entity\User;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
@@ -52,7 +50,8 @@ class UserResourceTest extends CustomApiTestCase
     public function testGetUser()
     {
         $client = self::createClient();
-        $user = $this->createUserAndLogin($client, "teste@teste.com", '123');
+        $user = $this->createUser( "teste@teste.com", '123');
+        $this->createUserAndLogin($client, "otherteste@teste.com", '123');
         $user->setPhoneNumber('555.123.456');
 
         $em = $this->getEntityManager();
