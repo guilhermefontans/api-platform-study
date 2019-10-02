@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use App\Validator\IsValidOwner;
 use Symfony\Component\Validator\Constraints as Assert;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
@@ -97,8 +98,9 @@ class CheeseListing
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cheeseListings")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"cheese:read", "cheese:write"})
-     * @Assert\Valid()
+     * @Groups({"cheese:read", "cheese:collection:post"})
+     * @IsValidOwner()
+     * @Assert\NotBlank()
      */
     private $owner;
 
