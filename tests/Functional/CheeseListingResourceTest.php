@@ -33,10 +33,10 @@ class CheeseListingResourceTest extends CustomApiTestCase
         ];
 
         $client->request('POST', '/api/cheeses', [
-            'json' => $cheesyData + ['owner' => '/api/users/'.$otherUser->getId()],
+            'json' => $cheesyData,
         ]);
 
-        $this->assertResponseStatusCodeSame(400, 'not passing the correct owner');
+        $this->assertResponseStatusCodeSame(201);
 
         $client->request('POST', '/api/cheeses', [
             'json' => $cheesyData + ['owner' => '/api/users/'.$authenticatedUser->getId()],

@@ -37,7 +37,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
             "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}, "xml"={"text/xml"}}
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
  * @ApiFilter(BooleanFilter::class, properties={"isPublished"})
  * @ApiFilter(SearchFilter::class, properties={
  *     "title": "partial",
@@ -47,6 +46,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * })
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ApiFilter(PropertyFilter::class)
+ * @ORM\Entity(repositoryClass="App\Repository\CheeseListingRepository")
+ * @ORM\EntityListeners({"App\Doctrine\CheeseListingSetOwnerListener"})
  */
 class CheeseListing
 {
@@ -100,7 +101,6 @@ class CheeseListing
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"cheese:read", "cheese:collection:post"})
      * @IsValidOwner()
-     * @Assert\NotBlank()
      */
     private $owner;
 
