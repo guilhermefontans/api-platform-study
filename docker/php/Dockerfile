@@ -6,13 +6,13 @@ RUN pecl install apcu
 
 RUN apt-get update && \
 apt-get install -y \
-zlib1g-dev
+zlib1g-dev git libzip-dev unzip
 
+RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install zip
-RUN docker-php-ext-enable apcu
 
-WORKDIR ../../
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY ./ /usr/src/app
+WORKDIR /app
 
-RUN PATH=$PATH:/usr/src/apps/vendor/bin:bin
+COPY ./ /app
