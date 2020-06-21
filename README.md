@@ -1,8 +1,6 @@
 #### Description
 This repository is result of a course that i studied on SymfonyCasts about the tool [Api Platform](https://api-platform.com/). 
 
-#### Tecnologies used
-
 #### Requirements
 * [Docker](https://docs.docker.com/install/linux/docker-ce/debian/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
