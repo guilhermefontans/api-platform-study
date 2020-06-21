@@ -11,8 +11,6 @@ zlib1g-dev git libzip-dev unzip
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install zip
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 WORKDIR /app
 
 COPY ./ /app
